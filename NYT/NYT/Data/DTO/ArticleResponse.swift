@@ -9,7 +9,7 @@ import Foundation
 
 struct ArticleResponse: Decodable, Identifiable {
     let uri: String
-    let url: URL
+    let url: String
     let id: Int
     let publishedDate: String
     let section: String

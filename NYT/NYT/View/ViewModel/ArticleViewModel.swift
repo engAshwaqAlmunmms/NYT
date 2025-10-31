@@ -17,7 +17,6 @@ enum ViewState {
 class ArticleViewModel: ObservableObject {
     
     @Published var article: NYTModel?
-    @Published var articleCount = 0
     @Published var viewState: ViewState = .loading
 
     func getData(period: Int) async throws  {
@@ -26,7 +25,6 @@ class ArticleViewModel: ObservableObject {
         switch news {
         case .success(let article):
             self.article = article
-            self.articleCount = article.numResults
             self.viewState = .loaded
         case .failure(let error):
             print(error.localizedDescription)

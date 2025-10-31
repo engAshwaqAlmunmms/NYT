@@ -14,18 +14,19 @@ struct ArticlesView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("NYTimes")
-                    .font(.largeTitle)
+                Text("The New York Times")
+                    .font(.system(size: 40, weight: .black, design: .serif))
                     .bold()
-                Image("NYT")
-                    .resizable()
-                    .imageScale(.large)
-                    .cornerRadius(10)
-                    .padding()
+                    .padding(.trailing, 200)
+                CirclePagesView(viewModel: viewModel)
+                    .padding(.trailing, 260)
+
                 List(viewModel.article?.results ?? [], id: \.id) { item in
-                    NavigationLink(destination: ArticleDetails(url: item.url)) {
+                    NavigationLink(destination: ArticleDetails(articleImageURL: item.media.first?.url,
+                                                               articleURL: item.url,
+                                                               writer: item.writer)) {
                         HStack(spacing: 12) {
-                            AsyncImage(url: item.media.first?.url) { image in
+                            AsyncImage(url: item.media.last?.url) { image in
                                 image
                                     .resizable()
                                     .frame(width: 150, height: 150)
@@ -39,7 +40,7 @@ struct ArticlesView: View {
                                     .font(.title3)
                                 Text(item.publishedDate)
                                     .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(.red)
                                 Text(item.writer)
                                     .font(.caption2)
                                     .lineLimit(1)
