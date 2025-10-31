@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var viewModel = ArticleViewModel()
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
                 .onTapGesture {
-//                    Task {
-//                        await NYTNetwork().fetchMostPopularArticle(period: 1)
-//                    }
+                    Task {
+                        try await viewModel.getData(period: 1)
+                    }
                 }
-            Text("Hello, world!")
         }
         .padding()
     }
