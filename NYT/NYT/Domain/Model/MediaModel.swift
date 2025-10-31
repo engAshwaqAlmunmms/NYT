@@ -9,7 +9,7 @@ import Foundation
 
 class MediaModel {
     var caption: String? = ""
-    var url: String = ""
+    var url: URL?
     var height: Int = 0
     var width: Int = 0
     

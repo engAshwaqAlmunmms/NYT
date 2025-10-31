@@ -16,7 +16,7 @@ enum ViewState {
 
 class ArticleViewModel: ObservableObject {
     
-    @Published var article :[ArticleModel] = []
+    @Published var article: NYTModel?
     @Published var articleCount = 0
     @Published var viewState: ViewState = .loading
 
@@ -25,7 +25,7 @@ class ArticleViewModel: ObservableObject {
         let news = try await GetMostPopularArticles().execute(period: period)
         switch news {
         case .success(let article):
-            self.article = article.results
+            self.article = article
             self.articleCount = article.numResults
             self.viewState = .loaded
         case .failure(let error):

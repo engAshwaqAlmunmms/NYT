@@ -19,7 +19,7 @@ struct MediaResponse: Decodable {
 
 // MARK: - Media Metadata
 struct MediaMetadataResponse: Decodable {
-    let url: String
+    let url: URL
     let height: Int
     let width: Int
 }

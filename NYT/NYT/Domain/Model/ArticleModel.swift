@@ -8,7 +8,7 @@
 import Foundation
 
 class ArticleModel {
-    var url: String = ""
+    var url: URL
     var id: Int = 0
     var publishedDate: String = ""
     var subsection: String = ""
