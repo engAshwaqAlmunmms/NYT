@@ -21,6 +21,7 @@ struct ArticlesView: View {
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             viewModel.viewState = .loaded
+                            currentPage = 0
                         }
                     }
             }

@@ -16,7 +16,6 @@ final class ArticleReaderViewModel: ObservableObject {
     @Published var viewState: ViewState = .loading
 
     func fetchArticle(from urlString: String) async throws {
-        viewState = .loading
         guard let url = URL(string: urlString) else { return viewState = .error }
 
         let (data, _) = try await URLSession.shared.data(from: url)
