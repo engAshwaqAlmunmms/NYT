@@ -15,7 +15,21 @@ class MockNYTNetworkRepo: NYTNetworkRepo {
         if shouldReturnError {
             return .failure(NSError(domain: "TestError", code: 1, userInfo: nil))
         } else {
-            let dummyArticle = NYTModel(response: NYTResponse(status: "OK", numResults: 1, results: []))
+            let dummyArticle = NYTModel(response: NYTResponse(status: "OK", numResults: 1, results: [
+                ArticleResponse(uri: "URI_0",
+                                url: "https://test.com",
+                                id: 90,
+                                publishedDate: "2025-11-02",
+                                section: "Technology",
+                                subsection: "Programming",
+                                nytdsection: "Tech",
+                                adxKeywords: "Swift, Apple, iOS",
+                                byline: "By Ashwaq",
+                                title: "Learning Swift the Easy Way",
+                                abstract: "A beginner-friendly introduction to Swift language fundamentals.",
+                                media: [])
+            ])
+            )
             return .success(dummyArticle)
         }
     }
