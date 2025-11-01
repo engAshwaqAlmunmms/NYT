@@ -20,7 +20,6 @@ class ArticleViewModel: ObservableObject {
     @Published var viewState: ViewState = .loading
 
     func getData(period: Int) async throws  {
-        viewState = .loading
         let news = try await GetMostPopularArticles().execute(period: period)
         switch news {
         case .success(let article):

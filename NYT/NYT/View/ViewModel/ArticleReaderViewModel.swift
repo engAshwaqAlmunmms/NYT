@@ -9,17 +9,18 @@ import Foundation
 import Combine
 import SwiftSoup
 
-@MainActor
 final class ArticleReaderViewModel: ObservableObject {
     
     @Published var articleText: String = ""
     @Published var title: String = ""
-    
+    @Published var viewState: ViewState = .loading
+
     func fetchArticle(from urlString: String) async throws {
-        guard let url = URL(string: urlString) else { return }
+        viewState = .loading
+        guard let url = URL(string: urlString) else { return viewState = .error }
 
         let (data, _) = try await URLSession.shared.data(from: url)
-        guard let html = String(data: data, encoding: .utf8) else { return }
+        guard let html = String(data: data, encoding: .utf8) else { return  viewState = .error }
 
         let doc: Document = try SwiftSoup.parse(html)
         title = try doc.select("h1").first()?.text() ?? ""
@@ -27,7 +28,6 @@ final class ArticleReaderViewModel: ObservableObject {
         let paragraphs = try doc.select("section[name=articleBody] p")
         let rawText = try paragraphs.array().map { try $0.text() }.joined(separator: "\n\n")
 
-        // ❌ إزالة جميع الرسائل المزعجة في أي مكان بالنص
         let patterns = [
             "We are having trouble retrieving the article content.*",
             "Please enable JavaScript.*",
@@ -42,7 +42,6 @@ final class ArticleReaderViewModel: ObservableObject {
             cleanedText = cleanedText.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
         }
 
-        // إزالة الأسطر الفارغة الزائدة
         cleanedText = cleanedText
             .components(separatedBy: .newlines)
             .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
@@ -50,6 +49,7 @@ final class ArticleReaderViewModel: ObservableObject {
 
         DispatchQueue.main.async {
             self.articleText = cleanedText
+            self.viewState = .loaded
         }
     }
 }

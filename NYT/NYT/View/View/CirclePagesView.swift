@@ -10,8 +10,8 @@ import SwiftUI
 struct CirclePagesView: View {
     
     @ObservedObject var viewModel: ArticleViewModel
-    @State private var currentPage = 0
-    let totalPages: [Int] = [1, 7, 30]
+    @Binding var currentPage: Int
+    let totalPages: [Int] = [1, 7, 10, 30]
     
     var body: some View {
         VStack {
@@ -20,9 +20,9 @@ struct CirclePagesView: View {
                     Button(action: {
                         withAnimation {
                             currentPage = index
-                            Task {
-                                try await viewModel.getData(period: totalPages[index])
-                            }
+                        }
+                        Task {
+                            try await viewModel.getData(period: totalPages[index])
                         }
                     }) {
                         Circle()
