@@ -13,8 +13,8 @@ class NYTModel {
     var results: [ArticleModel] = []
     
     init(response: NYTResponse) {
-        self.status = response.status
-        self.numResults = response.numResults
-        self.results = response.results.map { ArticleModel(response: $0) }
+        self.status = response.status ?? ""
+        self.numResults = response.numResults ?? 0
+        self.results = response.results?.map { ArticleModel(response: $0) } ?? []
     }
 }

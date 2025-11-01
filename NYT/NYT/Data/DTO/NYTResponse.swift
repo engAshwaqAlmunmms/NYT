@@ -9,9 +9,9 @@ import Foundation
 
 // MARK: - Response Model
 struct NYTResponse: Decodable {
-    let status: String
-    let numResults: Int
-    let results: [ArticleResponse]
+    let status: String?
+    let numResults: Int?
+    let results: [ArticleResponse]?
 
     enum CodingKeys: String, CodingKey {
         case status

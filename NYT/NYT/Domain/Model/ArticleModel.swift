@@ -19,14 +19,14 @@ class ArticleModel {
     var media: [MediaModel]
     
     init(response: ArticleResponse) {
-        self.url = response.url
-        self.id = response.id
-        self.publishedDate = response.publishedDate
-        self.subsection = response.subsection
-        self.nytdsection = response.nytdsection
-        self.keywords = response.adxKeywords
-        self.writer = response.byline
-        self.title = response.title
-        self.media = response.media.map { MediaModel(response: $0) }
+        self.url = response.url ?? ""
+        self.id = response.id ?? 0
+        self.publishedDate = response.publishedDate ?? ""
+        self.subsection = response.subsection ?? ""
+        self.nytdsection = response.nytdsection ?? ""
+        self.keywords = response.adxKeywords ?? ""
+        self.writer = response.byline ?? ""
+        self.title = response.title ?? ""
+        self.media = response.media?.map { MediaModel(response: $0) } ?? []
     }
 }
